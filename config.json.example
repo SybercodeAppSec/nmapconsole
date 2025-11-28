@@ -1,0 +1,507 @@
+{
+    "firm_name": "gebze",
+    "username": "hyavuz",
+    "password": "REDACTED",
+    "domain": "enkapower.pvt",
+    "opsec_safe": false,
+    "subnet": [
+        "10.136.8.0/21",
+        "10.150.0.0/24",
+        "10.151.0.0/24"
+    ],
+    "scan_type": "tcp,udp",
+    "scan_engine": "msfconsole,nmap,nxc",
+    "exclude_ips": [
+        "10.136.9.13",
+        "127.0.1.1",
+        "10.136.8.106",
+        "10.136.8.108"
+    ],
+    "threads": 25,
+    "nmap_args": "-n -vv --open -T5",
+    "output_dir": "scans",
+    "modules_nmap": {
+        "22": [
+            "ssh-auth-methods",
+            "ssh-hostkey",
+            "ssh-publickey-acceptance",
+            "ssh2-enum-algos",
+            "sshv1"
+        ],
+        "1433": [
+            "ms-sql-dac",
+            "ms-sql-dump-hashes",
+            "ms-sql-empty-password",
+            "ms-sql-info",
+            "ms-sql-ntlm-info"
+        ],
+        "6379": [
+            "redis-info"
+        ],
+        "25": [
+            "smtp-ntlm-info",
+            "smtp-open-relay",
+            "smtp-vuln-cve2010-4344",
+            "smtp-vuln-cve2011-1720",
+            "smtp-vuln-cve2011-1764"
+        ],
+        "3389": [
+            "rdp-enum-encryption",
+            "rdp-ntlm-info",
+            "rdp-vuln-ms12-020"
+        ],
+        "548": [
+            "afp-serverinfo",
+            "afp-path-vuln"
+        ],
+        "631": [
+            "cups-info"
+        ],
+        "80": [
+            "http-default-accounts",
+            "http-git",
+            "http-headers",
+            "http-hp-ilo-info",
+            "http-iis-short-name-brute",
+            "http-iis-webdav-vuln",
+            "http-ntlm-info",
+            "http-methods",
+            "http-php-version",
+            "http-shellshock",
+            "http-slowloris-check",
+            "http-aspnet-debug",
+            "http-avaya-ipoffice-users",
+            "http-dlink-backdoor",
+            "http-vmware-path-vuln"
+        ],
+        "443": [
+            "http-default-accounts",
+            "http-git",
+            "http-headers",
+            "http-hp-ilo-info",
+            "http-iis-short-name-brute",
+            "http-iis-webdav-vuln",
+            "http-ntlm-info",
+            "http-methods",
+            "http-php-version",
+            "http-shellshock",
+            "http-slowloris-check",
+            "http-aspnet-debug",
+            "http-avaya-ipoffice-users",
+            "http-dlink-backdoor",
+            "http-vmware-path-vuln",
+            "ssl-heartbleed",
+            "ssl-enum-ciphers",
+            "tls-ticketbleed"
+        ],
+        "1099": [
+            "rmi-vuln-classloader"
+        ],
+        "445": [
+            "smb-double-pulsar-backdoor",
+            "smb-enum-domains",
+            "smb-enum-groups",
+            "smb-enum-shares",
+            "smb-ls",
+            "smb-os-discovery",
+            "smb-security-mode",
+            "smb-vuln-cve-2017-7494",
+            "smb-vuln-cve2009-3103",
+            "smb-vuln-ms06-025",
+            "smb-vuln-ms07-029",
+            "smb-vuln-ms08-067",
+            "smb-vuln-ms10-054",
+            "smb-vuln-ms10-061",
+            "smb-vuln-ms17-010",
+            "smb-vuln-regsvc-dos",
+            "smb2-security-mode"
+        ],
+        "21": [
+            "ftp-syst",
+            "ftp-anon",
+            "ftp-proftpd-backdoor",
+            "ftp-vsftpd-backdoor",
+            "ftp-vuln-cve2010-4221"
+        ],
+        "3260": [
+            "iscsi-info"
+        ],
+        "5900": [
+            "vnc-info",
+            "realvnc-auth-bypass"
+        ],
+        "161": [
+            "snmp-brute",
+            "snmp-info"
+        ],
+        "623": [
+            "ipmi-cipher-zero",
+            "ipmi-version"
+        ],
+        "502": [
+            "modbus-discover"
+        ],
+        "53": [
+            "dns-nsid",
+            "dns-recursion",
+            "dns-zone-transfer"
+        ],
+        "11211": [
+            "memcached-info"
+        ],
+        "10001": [
+            "ubiquiti-discovery"
+        ]
+    },
+    "tcp_ports": [
+        21,
+        22,
+        23,
+        25,
+        161,
+        70,
+        79,
+        80,
+        81,
+        88,
+        110,
+        111,
+        135,
+        143,
+        443,
+        445,
+        500,
+        502,
+        548,
+        631,
+        873,
+        902,
+        1099,
+        1128,
+        1158,
+        1433,
+        1521,
+        1720,
+        1801,
+        1883,
+        1900,
+        2049,
+        2181,
+        2375,
+        3200,
+        3260,
+        3306,
+        3389,
+        3702,
+        5038,
+        5040,
+        5060,
+        5227,
+        5432,
+        5631,
+        5671,
+        5900,
+        6000,
+        6379,
+        8008,
+        8500,
+        9000,
+        9010,
+        9090,
+        9100,
+        9200,
+        10001,
+        16992,
+        17185
+    ],
+    "udp_ports": [
+        19,
+        21,
+        53,
+        123,
+        137,
+        161,
+        407,
+        523,
+        623,
+        5060,
+        5632,
+        11211,
+        13364
+    ],
+    "modules": {
+        "21": [
+            "auxiliary/scanner/ftp/ftp_version",
+            "auxiliary/scanner/ftp/anonymous",
+            "auxiliary/scanner/ftp/ftp_login",
+            "auxiliary/scanner/ftp/colorado_ftp_traversal"
+        ],
+        "1099": [
+            "auxiliary/gather/java_rmi_registry",
+            "auxiliary/scanner/misc/java_jmx_server",
+            "auxiliary/scanner/misc/java_rmi_server"
+        ],
+        "1433": [
+            "auxiliary/scanner/mssql/mssql_login",
+            "auxiliary/scanner/mssql/mssql_version"
+        ],
+        "22": [
+            "auxiliary/scanner/ssh/ssh_version",
+            "auxiliary/scanner/ssh/juniper_backdoor",
+            "auxiliary/scanner/ssh/libssh_auth_bypass",
+            "auxiliary/scanner/ssh/ssh_enum_git_keys",
+            "auxiliary/scanner/ssh/fortinet_backdoor"
+        ],
+        "23": [
+            "auxiliary/scanner/telnet/telnet_login",
+            "auxiliary/scanner/telnet/telnet_encrypt_overflow",
+            "auxiliary/scanner/telnet/telnet_version"
+        ],
+        "25": [
+            "auxiliary/scanner/smtp/smtp_version",
+            "auxiliary/scanner/smtp/smtp_relay"
+        ],
+        "88": [
+            "auxiliary/admin/kerberos/ms14_068_kerberos_checksum"
+        ],
+        "111": [
+            "auxiliary/scanner/misc/sunrpc_portmapper",
+            "auxiliary/scanner/portmap/portmap_amp"
+        ],
+        "135": [
+            "auxiliary/scanner/dcerpc/management",
+            "auxiliary/scanner/dcerpc/hidden",
+            "auxiliary/scanner/dcerpc/tcp_dcerpc_auditor",
+            "auxiliary/scanner/dcerpc/endpoint_mapper"
+        ],
+        "161": [
+            "auxiliary/scanner/snmp/snmp_login"
+        ],
+        "445": [
+            "auxiliary/gather/windows_deployment_services_shares",
+            "auxiliary/scanner/smb/smb_ms17_010",
+            "auxiliary/scanner/smb/smb_version"
+        ],
+        "502": [
+            "auxiliary/scanner/scada/modbusdetect",
+            "auxiliary/scanner/scada/modbus_banner_grabbing"
+        ],
+        "548": [
+            "auxiliary/scanner/afp/afp_login",
+            "auxiliary/scanner/afp/afp_server_info"
+        ],
+        "623": [
+            "auxiliary/scanner/ipmi/ipmi_version",
+            "auxiliary/scanner/ipmi/ipmi_dumphashes",
+            "auxiliary/scanner/ipmi/ipmi_cipher_zero"
+        ],
+        "1158": [
+            "auxiliary/scanner/oracle/emc_sid",
+            "auxiliary/scanner/oracle/spy_sid"
+        ],
+        "1900": [
+            "auxiliary/scanner/upnp/ssdp_msearch",
+            "auxiliary/scanner/upnp/ssdp_amp"
+        ],
+        "3389": [
+            "auxiliary/scanner/rdp/rdp_scanner",
+            "auxiliary/scanner/rdp/cve_2019_0708_bluekeep",
+            "auxiliary/scanner/rdp/ms12_020_check"
+        ],
+        "5038": [
+            "auxiliary/gather/asterisk_creds",
+            "auxiliary/voip/asterisk_login"
+        ],
+        "5060": [
+            "auxiliary/scanner/sip/options_tcp",
+            "auxiliary/scanner/sip/options"
+        ],
+        "5900": [
+            "auxiliary/admin/vnc/realvnc_41_bypass",
+            "auxiliary/scanner/vnc/vnc_none_auth",
+            "auxiliary/scanner/vnc/vnc_login"
+        ],
+        "8008": [
+            "auxiliary/scanner/http/chromecast_wifi",
+            "auxiliary/scanner/http/chromecast_webserver"
+        ],
+        "9000": [
+            "auxiliary/gather/listmonk_env_disclosure",
+            "auxiliary/gather/minio_bootstrap_verify_info_disc",
+            "auxiliary/scanner/misc/raysharp_dvr_passwords"
+        ],
+        "9090": [
+            "auxiliary/gather/prometheus_api_gather",
+            "auxiliary/admin/http/webnms_cred_disclosure"
+        ],
+        "11211": [
+            "auxiliary/scanner/memcached/memcached_amp",
+            "auxiliary/scanner/memcached/memcached_udp_version"
+        ],
+        "17185": [
+            "auxiliary/scanner/vxworks/wdbrpc_version",
+            "auxiliary/scanner/vxworks/urgent11_check"
+        ],
+        "19": [
+            "auxiliary/scanner/chargen/chargen_probe"
+        ],
+        "53": [
+            "auxiliary/scanner/dns/dns_amp"
+        ],
+        "70": [
+            "auxiliary/scanner/gopher/gopher_gophermap"
+        ],
+        "79": [
+            "auxiliary/scanner/finger/finger_users"
+        ],
+        "81": [
+            "auxiliary/scanner/http/buildmaster_login"
+        ],
+        "110": [
+            "auxiliary/scanner/pop3/pop3_version"
+        ],
+        "123": [
+            "auxiliary/scanner/ntp/ntp_readvar"
+        ],
+        "137": [
+            "auxiliary/scanner/netbios/nbname"
+        ],
+        "143": [
+            "auxiliary/scanner/imap/imap_version"
+        ],
+        "407": [
+            "auxiliary/scanner/motorola/timbuktu_udp"
+        ],
+        "500": [
+            "auxiliary/scanner/ike/cisco_ike_benigncertain"
+        ],
+        "523": [
+            "auxiliary/scanner/db2/discovery"
+        ],
+        "631": [
+            "auxiliary/scanner/misc/cups_browsed_info_disclosure"
+        ],
+        "873": [
+            "auxiliary/scanner/rsync/modules_list"
+        ],
+        "902": [
+            "auxiliary/scanner/vmware/vmauthd_version"
+        ],
+        "1128": [
+            "auxiliary/scanner/sap/sap_hostctrl_getcomputersystem"
+        ],
+        "1521": [
+            "auxiliary/scanner/oracle/tnspoison_checker"
+        ],
+        "1720": [
+            "auxiliary/scanner/h323/h323_version"
+        ],
+        "1801": [
+            "auxiliary/scanner/msmq/cve_2023_21554_queuejumper"
+        ],
+        "1883": [
+            "auxiliary/scanner/mqtt/connect"
+        ],
+        "2049": [
+            "auxiliary/scanner/nfs/nfsmount"
+        ],
+        "2181": [
+            "auxiliary/gather/zookeeper_info_disclosure"
+        ],
+        "2375": [
+            "auxiliary/scanner/http/docker_version"
+        ],
+        "3200": [
+            "auxiliary/scanner/sap/sap_service_discovery"
+        ],
+        "3306": [
+            "auxiliary/scanner/mysql/mysql_version"
+        ],
+        "3702": [
+            "auxiliary/scanner/wsdd/wsdd_query"
+        ],
+        "5040": [
+            "auxiliary/scanner/dcerpc/windows_deployment_services"
+        ],
+        "5227": [
+            "auxiliary/gather/hp_enum_perfd"
+        ],
+        "5432": [
+            "auxiliary/scanner/postgres/postgres_version"
+        ],
+        "5631": [
+            "auxiliary/scanner/pcanywhere/pcanywhere_tcp"
+        ],
+        "5632": [
+            "auxiliary/scanner/pcanywhere/pcanywhere_udp"
+        ],
+        "5671": [
+            "auxiliary/scanner/amqp/amqp_version"
+        ],
+        "6000": [
+            "auxiliary/scanner/x11/open_x11"
+        ],
+        "6379": [
+            "auxiliary/scanner/redis/redis_login"
+        ],
+        "8500": [
+            "auxiliary/gather/adobe_coldfusion_fileread_cve_2023_26360"
+        ],
+        "9010": [
+            "auxiliary/gather/trackit_sql_domain_creds"
+        ],
+        "9100": [
+            "auxiliary/gather/prometheus_node_exporter_gather"
+        ],
+        "9200": [
+            "auxiliary/gather/elasticsearch_enum"
+        ],
+        "10001": [
+            "auxiliary/scanner/ubiquiti/ubiquiti_discover"
+        ],
+        "13364": [
+            "auxiliary/scanner/misc/rosewill_rxs3211_passwords"
+        ],
+        "16992": [
+            "auxiliary/scanner/http/intel_amt_digest_bypass"
+        ]
+    },
+    "module_options": {
+        "auxiliary/scanner/ftp/ftp_login": [
+            "set BLANK_PASSWORDS true"
+        ],
+        "auxiliary/scanner/telnet/telnet_login": [
+            "set BLANK_PASSWORDS true"
+        ],
+        "auxiliary/scanner/snmp/snmp_login": [
+            "set VERSION all"
+        ],
+        "auxiliary/scanner/afp/afp_login": [
+            "set BLANK_PASSWORDS true"
+        ],
+        "auxiliary/scanner/ipmi/ipmi_dumphashes": [
+            "set CRACK_COMMON false"
+        ],
+        "auxiliary/voip/asterisk_login": [
+            "set BLANK_PASSWORDS true",
+            "set --clear PASS_FILE",
+            "set --clear USER_FILE"
+        ],
+        "auxiliary/scanner/vnc/vnc_login": [
+            "set BLANK_PASSWORDS true"
+        ],
+        "auxiliary/scanner/http/buildmaster_login": [
+            "set BLANK_PASSWORDS true"
+        ],
+        "auxiliary/scanner/mqtt/connect": [
+            "set BLANK_PASSWORDS true",
+            "set --clear PASS_FILE",
+            "set --clear USER_FILE"
+        ],
+        "auxiliary/scanner/redis/redis_login": [
+            "set BLANK_PASSWORDS true",
+            "set --clear PASS_FILE",
+            "set --clear USER_FILE"
+        ]
+    }
+}
