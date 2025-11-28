@@ -1,8 +1,8 @@
 {
-    "firm_name": "gebze",
-    "username": "hyavuz",
-    "password": "REDACTED",
-    "domain": "enkapower.pvt",
+    "firm_name": "firm",
+    "username": "",
+    "password": "",
+    "domain": "",
     "opsec_safe": false,
     "subnet": [
         "10.136.8.0/21",
