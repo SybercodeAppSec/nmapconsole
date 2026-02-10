@@ -185,6 +185,9 @@ class ScanRunner:
                         subprocess.run(cmd, check=True)
                         self.checkpoint['completed_scans'].append(scan_id)
                         self._save_checkpoint()
+                    except KeyboardInterrupt:
+                        print(f"\n[!] Skipping current module: {module_path}...")
+                        continue
                     except subprocess.TimeoutExpired:
                         print(f"Timeout expired for {scan_id}")
                     except subprocess.CalledProcessError as e:

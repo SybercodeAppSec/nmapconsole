@@ -146,6 +146,9 @@ class NmapRunner:
                         # Fix permissions for generated files (xml, nmap, gnmap)
                         # Easiest is to fix the whole output dir or specific files
                         fix_permissions(output_dir) 
+                    except KeyboardInterrupt:
+                        print(f"\n[!] Skipping current Nmap scan...")
+                        continue
                     except subprocess.CalledProcessError as e:
                         print(f"NSE scan failed for port {port}: {e}")
                     except Exception as e:

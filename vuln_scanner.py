@@ -8,7 +8,40 @@ from scanner_modules.discovery import DiscoveryManager
 from scanner_modules.runner import ScanRunner
 from scanner_modules.html_generator import HtmlGenerator
 from scanner_modules.nmap_scanner import NmapRunner
+from scanner_modules.nmap_scanner import NmapRunner
 from scanner_modules.nxc_scanner import NxcRunner
+import termios
+import tty
+
+def configure_terminal():
+    """
+    Configures the terminal to send SIGINT on CTRL+B (skip current)
+    and SIGQUIT on CTRL+C (force quit).
+    """
+    try:
+        if not sys.stdin.isatty():
+            return
+
+        fd = sys.stdin.fileno()
+        old_settings = termios.tcgetattr(fd)
+
+        def restore_settings():
+            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+
+        import atexit
+        atexit.register(restore_settings)
+
+        new_settings = termios.tcgetattr(fd)
+        # VINTR is usually CTRL+C (\x03). Remap to CTRL+B (\x02)
+        new_settings[6][termios.VINTR] = b'\x02'
+        # VQUIT is usually CTRL+\ (\x1c). Remap to CTRL+C (\x03)
+        new_settings[6][termios.VQUIT] = b'\x03'
+        
+        termios.tcsetattr(fd, termios.TCSADRAIN, new_settings)
+        print("Terminal configured: CTRL+B to skip current step, CTRL+C to quit.")
+        
+    except Exception as e:
+        print(f"Warning: Could not configure terminal signal keys: {e}")
 
 def validate_config(config):
     tcp_ports = set(config.get('tcp_ports', []))
@@ -43,6 +76,7 @@ def validate_config(config):
         sys.exit(1)
 
 def main():
+    configure_terminal()
     parser = argparse.ArgumentParser(description="Network Vulnerability Scanner")
     subparsers = parser.add_subparsers(dest='command', help='Command to run')
 

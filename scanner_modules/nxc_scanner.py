@@ -81,6 +81,9 @@ class NxcRunner:
             self.checkpoint['completed_scans'].append(scan_id)
             self._save_checkpoint()
             
+        except KeyboardInterrupt:
+            print(f"\n[!] Skipping current nxc command...")
+            return
         except Exception as e:
             print(f"Error running command: {e}")
 
