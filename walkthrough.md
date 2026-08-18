@@ -68,6 +68,8 @@ Runs Metasploit auxiliary modules against the discovered targets.
     *   Parallel: Uses `setg threads 25` in msfconsole.
     *   Safe: Only runs auxiliary modules (no exploits/DoS).
     *   Unauthenticated: Filters out modules that require credentials or sessions.
+    *   **Hang-proof**: Each msfconsole/nmap process runs in its own process group with a hard timeout. If a module opens a listener and blocks (e.g. old VNC capture modules on 5900), the whole group is killed and the scan continues. Timed-out scans are marked complete so they are not retried.
+    *   `analyze` now also excludes `auxiliary/server/*` (capture) modules which bind ports instead of scanning them.
 
 ### 4. Custom Module Options
 You can define custom options for specific modules in `config.json`. This is useful for setting required parameters like `VERSION`, `THREADS`, or specific credentials.
@@ -130,3 +132,23 @@ These IPs are passed to Nmap using the `--exclude` flag to prevent the scanner f
 -   `config.json`: Scan configuration.
 -   `inventory.json`: Discovered hosts and ports.
 -   `checkpoint.json`: Scan progress tracking.
+
+## NetExec (nxc) Engine
+
+The `nxc` engine targets **NetExec >= 1.3.0** (tested with 1.5.1, pipx install `git+https://github.com/Pennyw0rth/NetExec`).
+
+Modern NetExec changes handled automatically:
+*   `--users` / `--groups` / `--computers` domain enumeration moved from **SMB to LDAP** and now run via `nxc ldap`.
+*   Removed modules (`ntlm_reflection`, `dfscoerce`, `petitpotam`, `printerbug`, `shadowcoerce`, `efsr_spray`) are replaced by `enum_cve` / `coerce_plus`.
+*   `ldap-checker` info (LDAP signing/channel binding) is now shown in the plain `nxc ldap` banner output.
+*   `enum_trusts` replaced by `--dc-list`, `pso` module replaced by the `--pso` flag.
+
+Flow:
+*   **Anonymous** (no creds): SMB shares/pass-pol/sessions/relay-list + `enum_ca`, `enum_cve`, `ioxidresolver`, `smbghost`, `spooler`, `webdav`; LDAP banner + null-session-friendly modules (`adcs`, `maq`, `subnets`, `user-desc`, ...).
+*   **Null/Guest sessions**: `-u '' -p ''` and `-u 'doesnotexist' -p ''` share enumeration.
+*   **Authenticated** (`username`/`password`/`domain` in config): SMB shares, sessions, loggedon-users, rid-brute, disks, interfaces + vuln modules; LDAP full domain enum (`--users`, `--groups`, `--dc-list`, `--find-delegation`, `--kerberoasting`, `--asreproast`, `--pso`, ...).
+*   **DC-only modules** (targets detected via 445+88+389): `zerologon`, `nopac`, `gpp_password`, `gpp_autologin`, `gpp_privileges`, `badsuccessor`, `resetnightmare` (CVE-2026-27912), `dump-computers`.
+
+Config keys:
+*   `nxc_threads`: parallel threads for nxc (default 100).
+*   `opsec_safe: true` skips noisy/attack modules (zerologon, resetnightmare, timeroast, pre2k, nopac, badsuccessor).

@@ -28,6 +28,8 @@ class HTMLReporter:
                 'smb-vuln-cve2009-3103', 'smb-vuln-ms06-025', 'smb-vuln-ms07-029', 
                 'smb-vuln-ms08-067', 'smb-vuln-ms10-054', 'smb-vuln-ms10-061', 
                 'smb-vuln-ms17-010', 'smb-vuln-regsvc-dos', 'smb-double-pulsar-backdoor',
+                'smb-vuln-webexec', 'smb-vuln-conficker',
+                'mysql-vuln-cve2012-2122', 'supermicro-ipmi-conf',
                 # MSF
                 'auxiliary/scanner/mssql/mssql_login',
                 'auxiliary/scanner/ftp/ftp_login',
@@ -37,16 +39,42 @@ class HTMLReporter:
                 'auxiliary/scanner/smb/smb_ms17_010',
                 'auxiliary/scanner/rdp/cve_2019_0708_bluekeep',
                 'auxiliary/scanner/rdp/ms12_020_check',
+                'auxiliary/scanner/vnc/vnc_none_auth',
+                'auxiliary/scanner/misc/dahua_dvr_auth_bypass',
+                'auxiliary/scanner/mongodb/cve_2025_14847_mongobleed',
                 # NetExec
-                'smb/printnightmare'
+                'smb/printnightmare',
+                'smb/zerologon',
+                'smb/badsuccessor',
+                'smb/resetnightmare',
+                'smb/dc_zerologon',
+                'smb/dc_badsuccessor',
+                'smb/dc_resetnightmare'
             ],
             'High': [
                 # Nmap
                 'smtp-vuln-cve2010-4344', 'smtp-vuln-cve2011-1720', 'smtp-vuln-cve2011-1764',
                 'ftp-proftpd-backdoor', 'ftp-vsftpd-backdoor', 'ftp-vuln-cve2010-4221',
                 'smb-enum-shares', 'smb-ls', 'realvnc-auth-bypass',
+                'http-vuln-cve2010-2861', 'http-vuln-cve2017-1001000',
+                'http-coldfusion-subzero', 'http-litespeed-sourcecode-download',
+                'http-frontpage-login', 'http-awstatstotals-exec',
+                'http-barracuda-dir-traversal', 'http-axis2-dir-traversal',
+                'http-dlink-backdoor', 'http-huawei-hg5xx-vuln',
+                'http-vuln-cve2013-7091', 'http-vuln-cve2015-1427',
+                'http-vuln-cve2015-1635', 'http-vuln-cve2017-5638',
+                'http-vuln-cve2017-5689', 'http-vuln-cve2017-8917',
+                'http-vuln-cve2014-2129', 'http-vuln-wnr1000-creds',
+                'http-vuln-misfortune-cookie', 'netbus-auth-bypass',
+                'rsa-vuln-roca', 'samba-vuln-cve-2012-1182',
                 # MSF
                 'auxiliary/scanner/ftp/colorado_ftp_traversal',
+                'auxiliary/gather/crushftp_fileread_cve_2024_4040',
+                'auxiliary/gather/crushftp_authbypass_cve_2025_2825',
+                'auxiliary/scanner/http/springcloud_traversal',
+                'auxiliary/scanner/http/apache_nifi_login',
+                'auxiliary/scanner/http/jupyter_login',
+                'auxiliary/gather/splunk_raw_server_info',
                 'auxiliary/gather/java_rmi_registry',
                 'auxiliary/scanner/misc/java_jmx_server',
                 'auxiliary/scanner/misc/java_rmi_server',
@@ -57,8 +85,8 @@ class HTMLReporter:
                 'auxiliary/scanner/afp/afp_login',
                 'auxiliary/scanner/ipmi/ipmi_dumphashes',
                 'auxiliary/admin/vnc/realvnc_41_bypass',
-                'auxiliary/scanner/vnc/vnc_none_auth',
                 'auxiliary/scanner/vnc/vnc_login',
+                'auxiliary/scanner/vnc/ard_root_pw',
                 'auxiliary/gather/adobe_coldfusion_fileread_cve_2023_26360',
                 'auxiliary/gather/elasticsearch_enum',
                 # NetExec
@@ -67,7 +95,18 @@ class HTMLReporter:
                 'smb/guest_users',
                 'smb/user_users',
                 'smb/null_users',
-                'auxiliary/scanner/msmq/cve_2023_21554_queuejumper'
+                'auxiliary/scanner/msmq/cve_2023_21554_queuejumper',
+                'ldap/kerberoasting',
+                'ldap/asreproast',
+                'smb/ms17-010',
+                'smb/nopac',
+                'smb/gpp_autologin',
+                'smb/gpp_password',
+                'smb/gpp_privileges',
+                'smb/dc_nopac',
+                'smb/dc_gpp_autologin',
+                'smb/dc_gpp_password',
+                'smb/dc_gpp_privileges'
             ],
             'Medium': [
                 # Nmap
@@ -75,10 +114,14 @@ class HTMLReporter:
                 'http-iis-webdav-vuln', 'http-shellshock', 'http-avaya-ipoffice-users',
                 'http-dlink-backdoor', 'http-vmware-path-vuln', 'tls-ticketbleed',
                 'ssl-heartbleed', 'rmi-vuln-classloader', 'ftp-anon', 'snmp-brute',
-                'ipmi-cipher-zero',
+                'ipmi-cipher-zero', 'ssl-ccs-injection', 'ssl-poodle',
+                'ssl-known-key', 'smb2-vuln-uptime', 'http-config-backup',
+                'http-backup-finder', 'http-cors', 'nfs-showmount', 'nfs-ls',
+                'mongodb-databases', 'redis-info', 'http-enum',
                 # MSF
                 'auxiliary/admin/http/webnms_cred_disclosure',
                 'auxiliary/scanner/ftp/anonymous',
+                'auxiliary/scanner/ftp/ftp_anonymous',
                 'auxiliary/scanner/ssh/ssh_enum_git_keys',
                 'auxiliary/scanner/snmp/snmp_login',
                 'auxiliary/gather/windows_deployment_services_shares',
@@ -90,13 +133,27 @@ class HTMLReporter:
                 'smb/guest_shares',
                 'smb/user_shares',
                 'smb/null_shares',
-                'smb/smbghost'
+                'smb/smbghost',
+                'smb/spooler',
+                'smb/webdav',
+                'smb/enum_av',
+                'smb/enum_cve',
+                'smb/coerce_plus',
+                'ldap/adcs',
+                'ldap/laps',
+                'ldap/maq',
+                'ldap/pre2k',
+                'ldap/user-desc',
+                'ldap/get-desc-users',
+                'smb/ntlmv1'
             ],
             'Low': [
                 # Nmap
                 'http-default-accounts', 'http-slowloris-check', 'http-aspnet-debug',
                 'smb-enum-domains', 'smb-enum-groups', 'ftp-syst', 'dns-recursion',
-                # MSF
+                'http-methods', 'http-headers', 'http-title', 'http-cakephp-version',
+                'http-devframework', 'mongodb-info', 'snmp-info', 'mysql-info',
+                'ms-sql-info', 'ms-sql-ntlm-info',
                 # MSF
                 'auxiliary/scanner/portmap/portmap_amp',
                 'auxiliary/scanner/dcerpc/management',
@@ -111,7 +168,8 @@ class HTMLReporter:
                 'auxiliary/scanner/mysql/mysql_version',
                 'auxiliary/scanner/scada/modbusdetect',
                 'auxiliary/scanner/ntp/ntp_readvar',
-                'auxiliary/scanner/rsync/modules_list'
+                'auxiliary/scanner/rsync/modules_list',
+                'auxiliary/scanner/winrm/winrm_auth_methods'
             ],
             'Info': [
                 'auxiliary/scanner/netbios/nbname',
@@ -120,7 +178,17 @@ class HTMLReporter:
                 'auxiliary/scanner/telnet/telnet_version',
                 'auxiliary/scanner/misc/sunrpc_portmapper',
                 'auxiliary/scanner/smb/smb_version',
-                'auxiliary/scanner/ftp/ftp_version'
+                'auxiliary/scanner/ftp/ftp_version',
+                'vnc-info', 'redis-info', 'memcached-info',
+                'ssh-auth-methods', 'ssh-hostkey', 'ssh2-enum-algos',
+                'rdp-enum-encryption', 'rdp-ntlm-info', 'smb-os-discovery',
+                'smb-security-mode', 'smb2-security-mode', 'ipmi-version',
+                'snmp-sysdescr', 'snmp-interfaces', 'ftp-syst', 'telnet-encryption',
+                'rtsp-methods', 'sip-methods', 'mqtt-subscribe', 'iscsi-info',
+                'rpcinfo', 'msrpc-enum', 'nfs-statfs', 'rsync-list-modules',
+                'upnp-info', 'dns-nsid', 'smtp-commands', 'pop3-capabilities',
+                'imap-capabilities', 'ssl-enum-ciphers', 'ssl-cert-intaddr',
+                'http-chrono', 'bjnp-info', 'modbus-discover'
             ]
         }
 
@@ -358,9 +426,14 @@ class HTMLReporter:
         try:
             filename = os.path.basename(txt_file)
             # Filename format: nxc_<protocol>_<module>.txt
-            parts = filename.replace('nxc_', '').replace('.txt', '').split('_', 1)
+            parts = filename.replace('nxc_', '', 1).replace('.txt', '').split('_', 1)
             protocol = parts[0]
-            module = parts[1] if len(parts) > 1 else 'general'
+            rest = parts[1] if len(parts) > 1 else 'general'
+            # DC-specific logs (nxc_smb_dc_zerologon.txt) -> protocol=smb, module=dc_zerologon
+            if protocol == 'smb' and rest.startswith('dc_'):
+                module = rest
+            else:
+                module = rest
             
             with open(txt_file, 'r', errors='ignore') as f:
                 content = f.read()
@@ -446,6 +519,7 @@ class HTMLReporter:
                 description = '\n'.join(h_lines)
                 
                 # Determine severity
+                # DC-specific names keep 'smb/dc_' prefix so severity map matches
                 severity = self._get_severity(f"{protocol}/{module}", description)
                 if severity is None:
                     severity = 'Info'

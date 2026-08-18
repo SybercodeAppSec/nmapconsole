@@ -2,6 +2,7 @@ import json
 import subprocess
 import os
 import time
+import signal
 import pwd
 import grp
 
@@ -164,35 +165,65 @@ class ScanRunner:
                     "options",
                     "run",
                     "spool off",
-                    "exit"
+                    "exit -y"
                 ])
                 
                 full_command = "; ".join(msf_commands)
                 cmd = []
                 if self.timeout > 0:
-                    cmd.extend(["timeout", str(self.timeout)])
+                    # --kill-after ensures children (listeners/sessions) are SIGKILLed too
+                    cmd.extend(["timeout", "--kill-after=10", str(self.timeout)])
                 
                 cmd.extend(["msfconsole", "-qx", full_command])
                 
                 if dry_run:
                     print(f"Command: {' '.join(cmd)}")
                 else:
+                    # Run msfconsole in its own process group so that on a hang
+                    # (e.g. VNC modules opening a listener/session on 5900 and
+                    # blocking the console) we can kill the WHOLE group, not
+                    # just the parent ruby process.
+                    hard_timeout = self.timeout + 30 if self.timeout > 0 else None
+                    proc = None
                     try:
-                        # We use the system 'timeout' command, so we don't need python's timeout here strictly,
-                        # but keeping a python timeout slightly larger than the system timeout is good practice
-                        # to ensure we catch it if the system timeout fails or hangs.
-                        # However, user requested command structure modification.
-                        subprocess.run(cmd, check=True)
+                        proc = subprocess.Popen(
+                            cmd,
+                            start_new_session=True,
+                            stdout=subprocess.DEVNULL,
+                            stderr=subprocess.STDOUT
+                        )
+                        proc.wait(timeout=hard_timeout)
+                        if proc.returncode == 124 and self.timeout > 0:
+                            # system timeout fired (module was killed by timeout)
+                            print(f"Module {scan_id} hit timeout ({self.timeout}s), marked done to avoid re-run.")
+                        elif proc.returncode not in (0, None):
+                            print(f"Scan for {scan_id} exited with code {proc.returncode}")
+                        self.checkpoint['completed_scans'].append(scan_id)
+                        self._save_checkpoint()
+                    except subprocess.TimeoutExpired:
+                        print(f"Hard timeout expired for {scan_id}, killing process group...")
+                        self._kill_process_group(proc)
                         self.checkpoint['completed_scans'].append(scan_id)
                         self._save_checkpoint()
                     except KeyboardInterrupt:
                         print(f"\n[!] Skipping current module: {module_path}...")
+                        self._kill_process_group(proc)
                         continue
-                    except subprocess.TimeoutExpired:
-                        print(f"Timeout expired for {scan_id}")
-                    except subprocess.CalledProcessError as e:
-                        print(f"Scan failed for {scan_id}: {e}")
                     except Exception as e:
                         print(f"An error occurred: {e}")
+                        self._kill_process_group(proc)
 
         print("Scan phase complete.")
+
+    def _kill_process_group(self, proc):
+        """Kill the whole process group of a Popen started with start_new_session=True."""
+        if proc is None:
+            return
+        try:
+            os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
+        except (ProcessLookupError, PermissionError, OSError):
+            pass
+        try:
+            proc.wait(timeout=10)
+        except Exception:
+            pass

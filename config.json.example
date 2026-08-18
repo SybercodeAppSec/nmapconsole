@@ -5,28 +5,95 @@
     "domain": "",
     "opsec_safe": false,
     "subnet": [
-        "10.136.8.0/21",
-        "10.150.0.0/24",
-        "10.151.0.0/24"
+        "192.168.1.0/24"
     ],
     "scan_type": "tcp,udp",
     "scan_engine": "msfconsole,nmap,nxc",
     "exclude_ips": [
-        "10.136.9.13",
-        "127.0.1.1",
-        "10.136.8.106",
-        "10.136.8.108"
+        "127.0.0.1"
     ],
     "threads": 25,
     "nmap_args": "-n -vv --open -T5",
     "output_dir": "scans",
+    "nxc_timeout": 0,
+    "nmap_timeout": 0,
+    "msf_timeout": 0,
     "modules_nmap": {
-        "22": [
-            "ssh-auth-methods",
-            "ssh-hostkey",
-            "ssh-publickey-acceptance",
-            "ssh2-enum-algos",
-            "sshv1"
+        "80": [
+            "http-aspnet-debug",
+            "http-auth-finder",
+            "http-avaya-ipoffice-users",
+            "http-backup-finder",
+            "http-cakephp-version",
+            "http-chrono",
+            "http-coldfusion-subzero",
+            "http-config-backup",
+            "http-cors",
+            "http-default-accounts",
+            "http-devframework",
+            "http-dlink-backdoor",
+            "http-enum",
+            "http-frontpage-login",
+            "http-git",
+            "http-headers",
+            "http-hp-ilo-info",
+            "http-iis-short-name-brute",
+            "http-iis-webdav-vuln",
+            "http-litespeed-sourcecode-download",
+            "http-methods",
+            "http-ntlm-info",
+            "http-php-version",
+            "http-shellshock",
+            "http-slowloris-check",
+            "http-vmware-path-vuln",
+            "http-vuln-cve2010-2861",
+            "http-vuln-cve2017-1001000"
+        ],
+        "443": [
+            "http-aspnet-debug",
+            "http-auth-finder",
+            "http-avaya-ipoffice-users",
+            "http-backup-finder",
+            "http-coldfusion-subzero",
+            "http-config-backup",
+            "http-cors",
+            "http-default-accounts",
+            "http-dlink-backdoor",
+            "http-enum",
+            "http-git",
+            "http-headers",
+            "http-hp-ilo-info",
+            "http-iis-short-name-brute",
+            "http-iis-webdav-vuln",
+            "http-litespeed-sourcecode-download",
+            "http-methods",
+            "http-ntlm-info",
+            "http-php-version",
+            "http-shellshock",
+            "http-slowloris-check",
+            "http-vmware-path-vuln",
+            "http-vuln-cve2017-1001000",
+            "ssl-ccs-injection",
+            "ssl-cert-intaddr",
+            "ssl-enum-ciphers",
+            "ssl-heartbleed",
+            "ssl-known-key",
+            "ssl-poodle",
+            "tls-ticketbleed"
+        ],
+        "8080": [
+            "http-auth-finder",
+            "http-config-backup",
+            "http-cors",
+            "http-enum"
+        ],
+        "8081": [
+            "http-enum"
+        ],
+        "8443": [
+            "http-enum",
+            "ssl-ccs-injection",
+            "ssl-poodle"
         ],
         "1433": [
             "ms-sql-dac",
@@ -38,73 +105,57 @@
         "6379": [
             "redis-info"
         ],
-        "25": [
-            "smtp-ntlm-info",
-            "smtp-open-relay",
-            "smtp-vuln-cve2010-4344",
-            "smtp-vuln-cve2011-1720",
-            "smtp-vuln-cve2011-1764"
+        "11211": [
+            "memcached-info"
+        ],
+        "27017": [
+            "mongodb-databases",
+            "mongodb-info"
+        ],
+        "9200": [
+            "http-auth-finder",
+            "http-title"
+        ],
+        "161": [
+            "snmp-brute",
+            "snmp-info",
+            "snmp-interfaces",
+            "snmp-sysdescr"
+        ],
+        "23": [
+            "telnet-encryption",
+            "telnet-ntlm-info"
+        ],
+        "1099": [
+            "rmi-dumpregistry",
+            "rmi-vuln-classloader"
         ],
         "3389": [
             "rdp-enum-encryption",
             "rdp-ntlm-info",
             "rdp-vuln-ms12-020"
         ],
+        "5900": [
+            "realvnc-auth-bypass",
+            "vnc-info"
+        ],
+        "500": [
+            "ike-version"
+        ],
         "548": [
-            "afp-serverinfo",
-            "afp-path-vuln"
-        ],
-        "631": [
-            "cups-info"
-        ],
-        "80": [
-            "http-default-accounts",
-            "http-git",
-            "http-headers",
-            "http-hp-ilo-info",
-            "http-iis-short-name-brute",
-            "http-iis-webdav-vuln",
-            "http-ntlm-info",
-            "http-methods",
-            "http-php-version",
-            "http-shellshock",
-            "http-slowloris-check",
-            "http-aspnet-debug",
-            "http-avaya-ipoffice-users",
-            "http-dlink-backdoor",
-            "http-vmware-path-vuln"
-        ],
-        "443": [
-            "http-default-accounts",
-            "http-git",
-            "http-headers",
-            "http-hp-ilo-info",
-            "http-iis-short-name-brute",
-            "http-iis-webdav-vuln",
-            "http-ntlm-info",
-            "http-methods",
-            "http-php-version",
-            "http-shellshock",
-            "http-slowloris-check",
-            "http-aspnet-debug",
-            "http-avaya-ipoffice-users",
-            "http-dlink-backdoor",
-            "http-vmware-path-vuln",
-            "ssl-heartbleed",
-            "ssl-enum-ciphers",
-            "tls-ticketbleed"
-        ],
-        "1099": [
-            "rmi-vuln-classloader"
+            "afp-path-vuln",
+            "afp-serverinfo"
         ],
         "445": [
             "smb-double-pulsar-backdoor",
             "smb-enum-domains",
             "smb-enum-groups",
             "smb-enum-shares",
+            "smb-enum-users",
             "smb-ls",
             "smb-os-discovery",
             "smb-security-mode",
+            "smb-vuln-conficker",
             "smb-vuln-cve-2017-7494",
             "smb-vuln-cve2009-3103",
             "smb-vuln-ms06-025",
@@ -114,40 +165,139 @@
             "smb-vuln-ms10-061",
             "smb-vuln-ms17-010",
             "smb-vuln-regsvc-dos",
-            "smb2-security-mode"
+            "smb-vuln-webexec",
+            "smb2-security-mode",
+            "smb2-vuln-uptime"
         ],
         "21": [
-            "ftp-syst",
             "ftp-anon",
+            "ftp-bounce",
+            "ftp-libopie",
             "ftp-proftpd-backdoor",
+            "ftp-syst",
             "ftp-vsftpd-backdoor",
             "ftp-vuln-cve2010-4221"
         ],
-        "3260": [
-            "iscsi-info"
+        "22": [
+            "ssh-auth-methods",
+            "ssh-hostkey",
+            "ssh-publickey-acceptance",
+            "ssh2-enum-algos",
+            "sshv1"
         ],
-        "5900": [
-            "vnc-info",
-            "realvnc-auth-bypass"
+        "3306": [
+            "mysql-databases",
+            "mysql-empty-password",
+            "mysql-enum",
+            "mysql-info",
+            "mysql-variables",
+            "mysql-vuln-cve2012-2122"
         ],
-        "161": [
-            "snmp-brute",
-            "snmp-info"
+        "1521": [
+            "oracle-tns-version"
         ],
         "623": [
+            "ipmi-brute",
             "ipmi-cipher-zero",
-            "ipmi-version"
+            "ipmi-version",
+            "supermicro-ipmi-conf"
         ],
         "502": [
             "modbus-discover"
         ],
+        "3260": [
+            "iscsi-info"
+        ],
+        "5060": [
+            "sip-methods"
+        ],
+        "1883": [
+            "mqtt-subscribe"
+        ],
+        "8883": [
+            "mqtt-subscribe"
+        ],
+        "873": [
+            "rsync-list-modules"
+        ],
+        "2049": [
+            "nfs-ls",
+            "nfs-showmount",
+            "nfs-statfs"
+        ],
+        "111": [
+            "rpcinfo"
+        ],
+        "135": [
+            "msrpc-enum"
+        ],
         "53": [
             "dns-nsid",
             "dns-recursion",
+            "dns-service-discovery",
             "dns-zone-transfer"
         ],
-        "11211": [
-            "memcached-info"
+        "25": [
+            "smtp-commands",
+            "smtp-ntlm-info",
+            "smtp-open-relay",
+            "smtp-vuln-cve2010-4344",
+            "smtp-vuln-cve2011-1720",
+            "smtp-vuln-cve2011-1764"
+        ],
+        "110": [
+            "pop3-capabilities",
+            "pop3-ntlm-info"
+        ],
+        "143": [
+            "imap-capabilities",
+            "imap-ntlm-info"
+        ],
+        "5985": [
+            "http-auth-finder",
+            "http-title"
+        ],
+        "5986": [
+            "http-title"
+        ],
+        "554": [
+            "rtsp-methods",
+            "rtsp-url-brute"
+        ],
+        "8554": [
+            "rtsp-methods"
+        ],
+        "1900": [
+            "upnp-info"
+        ],
+        "70": [
+            "http-headers",
+            "http-title"
+        ],
+        "79": [
+            "finger"
+        ],
+        "81": [
+            "http-enum",
+            "http-headers",
+            "http-title"
+        ],
+        "8008": [
+            "http-enum",
+            "http-title"
+        ],
+        "8000": [
+            "http-enum",
+            "http-title"
+        ],
+        "9000": [
+            "http-title"
+        ],
+        "9090": [
+            "http-title"
+        ],
+        "631": [
+            "cups-info"
         ],
         "10001": [
             "ubiquiti-discovery"
@@ -158,21 +308,23 @@
         22,
         23,
         25,
-        161,
+        53,
         70,
         79,
         80,
         81,
-        88,
         110,
         111,
         135,
         143,
+        161,
         443,
         445,
         500,
         502,
         548,
+        554,
+        623,
         631,
         873,
         902,
@@ -197,26 +349,38 @@
         5040,
         5060,
         5227,
+        5353,
         5432,
         5631,
         5671,
         5900,
+        5985,
+        5986,
         6000,
         6379,
+        8000,
         8008,
+        8080,
+        8081,
+        8443,
         8500,
+        8554,
+        8883,
+        8888,
         9000,
         9010,
         9090,
         9100,
         9200,
         10001,
+        11211,
         16992,
-        17185
+        17185,
+        27017,
+        37777
     ],
     "udp_ports": [
         19,
-        21,
         53,
         123,
         137,
@@ -232,9 +396,9 @@
     "modules": {
         "21": [
             "auxiliary/scanner/ftp/ftp_version",
-            "auxiliary/scanner/ftp/anonymous",
             "auxiliary/scanner/ftp/ftp_login",
-            "auxiliary/scanner/ftp/colorado_ftp_traversal"
+            "auxiliary/scanner/ftp/colorado_ftp_traversal",
+            "auxiliary/scanner/ftp/ftp_anonymous"
         ],
         "1099": [
             "auxiliary/gather/java_rmi_registry",
@@ -260,9 +424,6 @@
         "25": [
             "auxiliary/scanner/smtp/smtp_version",
             "auxiliary/scanner/smtp/smtp_relay"
-        ],
-        "88": [
-            "auxiliary/admin/kerberos/ms14_068_kerberos_checksum"
         ],
         "111": [
             "auxiliary/scanner/misc/sunrpc_portmapper",
@@ -309,7 +470,6 @@
             "auxiliary/scanner/rdp/ms12_020_check"
         ],
         "5038": [
-            "auxiliary/gather/asterisk_creds",
             "auxiliary/voip/asterisk_login"
         ],
         "5060": [
@@ -319,14 +479,14 @@
         "5900": [
             "auxiliary/admin/vnc/realvnc_41_bypass",
             "auxiliary/scanner/vnc/vnc_none_auth",
-            "auxiliary/scanner/vnc/vnc_login"
+            "auxiliary/scanner/vnc/vnc_login",
+            "auxiliary/scanner/vnc/ard_root_pw"
         ],
         "8008": [
             "auxiliary/scanner/http/chromecast_wifi",
             "auxiliary/scanner/http/chromecast_webserver"
         ],
         "9000": [
-            "auxiliary/gather/listmonk_env_disclosure",
             "auxiliary/gather/minio_bootstrap_verify_info_disc",
             "auxiliary/scanner/misc/raysharp_dvr_passwords"
         ],
@@ -464,6 +624,30 @@
         ],
         "16992": [
             "auxiliary/scanner/http/intel_amt_digest_bypass"
+        ],
+        "5985": [
+            "auxiliary/scanner/winrm/winrm_auth_methods",
+            "auxiliary/scanner/winrm/winrm_login"
+        ],
+        "8080": [
+            "auxiliary/gather/crushftp_fileread_cve_2024_4040",
+            "auxiliary/gather/crushftp_authbypass_cve_2025_2825"
+        ],
+        "8443": [
+            "auxiliary/scanner/http/apache_nifi_login"
+        ],
+        "8888": [
+            "auxiliary/scanner/http/springcloud_traversal",
+            "auxiliary/scanner/http/jupyter_login"
+        ],
+        "27017": [
+            "auxiliary/scanner/mongodb/cve_2025_14847_mongobleed"
+        ],
+        "37777": [
+            "auxiliary/scanner/misc/dahua_dvr_auth_bypass"
+        ],
+        "8000": [
+            "auxiliary/gather/splunk_raw_server_info"
         ]
     },
     "module_options": {

@@ -15,6 +15,13 @@ class ModuleAnalyzer:
                 content = f.read()
                 
             if not full_scan:
+                # Never include server/capture modules - they OPEN LISTENERS
+                # on the given port (e.g. auxiliary/server/capture/vnc binds
+                # 5900) and block the whole scan.
+                rel = os.path.relpath(file_path, self.aux_path)
+                if rel.split(os.sep)[0] == 'server':
+                    return None
+
                 # Check for authenticated mixins
                 # If it's an SMB Authenticated module, we only allow it if it's also a Scanner.
                 # Non-scanner authenticated modules (like gather/admin) usually require valid creds.

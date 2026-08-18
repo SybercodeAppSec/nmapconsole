@@ -2,6 +2,7 @@ import json
 import subprocess
 import os
 import time
+import signal
 from .runner import fix_permissions
 
 class NmapRunner:
@@ -139,19 +140,50 @@ class NmapRunner:
                 if dry_run:
                     print(f"Command: {' '.join(cmd)}")
                 else:
+                    # Own process group so a hanging NSE script (or a module
+                    # opening a listener) can be killed entirely on timeout.
+                    hard_timeout = self.timeout + 30 if self.timeout > 0 else None
+                    proc = None
                     try:
-                        subprocess.run(cmd, check=True)
+                        proc = subprocess.Popen(
+                            cmd,
+                            start_new_session=True,
+                            stdout=subprocess.DEVNULL,
+                            stderr=subprocess.STDOUT
+                        )
+                        proc.wait(timeout=hard_timeout)
+                        if proc.returncode == 124 and self.timeout > 0:
+                            print(f"NSE scan for port {port} hit timeout ({self.timeout}s), marked done to avoid re-run.")
+                        elif proc.returncode not in (0, None):
+                            print(f"NSE scan for port {port} exited with code {proc.returncode}")
                         self.checkpoint['completed_scans'].append(scan_id)
                         self._save_checkpoint()
                         # Fix permissions for generated files (xml, nmap, gnmap)
-                        # Easiest is to fix the whole output dir or specific files
-                        fix_permissions(output_dir) 
+                        fix_permissions(output_dir)
                     except KeyboardInterrupt:
                         print(f"\n[!] Skipping current Nmap scan...")
+                        self._kill_process_group(proc)
                         continue
-                    except subprocess.CalledProcessError as e:
-                        print(f"NSE scan failed for port {port}: {e}")
+                    except subprocess.TimeoutExpired:
+                        print(f"Hard timeout expired for {scan_id}, killing process group...")
+                        self._kill_process_group(proc)
+                        self.checkpoint['completed_scans'].append(scan_id)
+                        self._save_checkpoint()
                     except Exception as e:
                         print(f"An error occurred: {e}")
+                        self._kill_process_group(proc)
 
         print("NSE scan phase complete.")
+
+    def _kill_process_group(self, proc):
+        """Kill the whole process group of a Popen started with start_new_session=True."""
+        if proc is None:
+            return
+        try:
+            os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
+        except (ProcessLookupError, PermissionError, OSError):
+            pass
+        try:
+            proc.wait(timeout=10)
+        except Exception:
+            pass
